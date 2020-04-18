@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Backstage.Api</name>
+    </assembly>
+    <members>
+        <member name="T:Backstage.Api.Controllers.AccountController">
+            <summary>
+            账号相关
+            </summary>
+        </member>
+        <member name="M:Backstage.Api.Controllers.AccountController.LoginAsync(Backstage.Api.Models.Dto.AccountLoginInput)">
+            <summary>
+            用户登录，为了尽量简单，登录验证就不通过数据库了
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.Controllers.AccountController.GetCurrentUser">
+            <summary>
+            获取用户信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Backstage.Api.Controllers.BookApiWhiteListController">
+            <summary>
+            book相关Api接口白名单
+            </summary>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookApiWhiteListController.CreateAsync(CatBookApp.BookApiWhiteLists.Dto.CreateBookApiWhiteListDto)">
+            <summary>
+            新增
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookApiWhiteListController.UpdateAsync(CatBookApp.BookApiWhiteLists.Dto.BookApiWhiteListDto)">
+            <summary>
+            更新
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookApiWhiteListController.DeleteAsync(Backstage.Api.Models.Dto.IdsInput)">
+            <summary>
+            删除
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookApiWhiteListController.GetPagedAsync(CatBookApp.BookApiWhiteLists.Dto.GetPagedInput)">
+            <summary>
+            获取分页数据
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Backstage.Api.Controllers.BookReadRecordController">
+            <summary>
+            书本阅读记录
+            </summary>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookReadRecordController.GetBookReadRecordSummaryAsync(System.String)">
+            <summary>
+            书本阅读记录汇总信息
+            </summary>
+            <param name="openid"></param>
+            <returns>已阅读书本数、章节数、时长(min)</returns>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookReadRecordController.GetPagedByLastReadingAsync(CatBookApp.BookReadRecords.Dto.GetPagedByLastReadingInput)">
+            <summary>
+            分页获取用户最近的阅读记录
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookReadRecordController.GetPagedAsync(CatBookApp.BookReadRecords.Dto.GetPagedInput)">
+            <summary>
+            获取分页数据
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Backstage.Api.Controllers.BookStatisticController">
+            <summary>
+            book统计相关
+            </summary>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookStatisticController.GetBookUserRiseStatistic(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            book用户增长统计
+            </summary>
+            <param name="dateType">统计类型，y、m、d</param>
+            <param name="beginTime"></param>
+            <param name="endTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookStatisticController.GetBookUserTimeSlotStatistic">
+            <summary>
+            时间段（每小时）新增用户统计
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookStatisticController.GetBookUserReadChaptersStatistic">
+            <summary>
+            阅读了指定章节数的用户数量统计
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookStatisticController.GetBookReadTimeSlotStatistics">
+            <summary>
+            时间段（每小时）阅读小说数、时间段（每小时）阅读小说章节数 统计
+            </summary>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookStatisticController.GetMostPopularBook(System.Int32)">
+            <summary>
+            最受欢迎小说排行 top
+            </summary>
+            <param name="top"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookStatisticController.GetReadRanking(System.Int32)">
+            <summary>
+            阅读排行榜 top
+            </summary>
+            <param name="top"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Backstage.Api.Controllers.BookUserController">
+            <summary>
+            book用户
+            </summary>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookUserController.GetPagedAsync(CatBookApp.BookUsers.Dto.GetPagedInput)">
+            <summary>
+            获取分页数据
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookUserController.GetByOpenidAsync(System.String)">
+            <summary>
+            获取数据
+            </summary>
+            <param name="openid"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Backstage.Api.Controllers.BookUserPreferenceController">
+            <summary>
+            用户偏好
+            </summary>
+        </member>
+        <member name="M:Backstage.Api.Controllers.BookUserPreferenceController.GetPagedAsync(CatBookApp.BookUserPreferences.Dto.GetPagedInput)">
+            <summary>
+            获取分页数据
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Backstage.Api.Controllers.HomeController">
+            <summary>
+            首页
+            </summary>
+        </member>
+        <member name="P:Backstage.Api.ActionRes.Code">
+            <summary>
+            返回码, 大于等于0就表示成功, 小于0表示失败
+            </summary>
+        </member>
+        <member name="P:Backstage.Api.ActionRes.Msg">
+            <summary>
+            描述信息
+            </summary>
+        </member>
+        <member name="P:Backstage.Api.ActionRes.Data">
+            <summary>
+            返回数据
+            </summary>
+        </member>
+        <member name="T:Backstage.Api.ActionRes.Status">
+            <summary>
+            操作结果
+            </summary>
+        </member>
+        <member name="M:Backstage.Api.ActionRes.Response(Backstage.Api.ActionRes.Status,System.String,System.Object)">
+            <summary>
+            响应结果
+            </summary>
+            <param name="status"></param>
+            <param name="msg"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.ActionRes.Success">
+            <summary>
+            请求成功
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.ActionRes.Success(System.Object)">
+            <summary>
+            请求成功
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.ActionRes.Success(System.Int32,System.String,System.Object)">
+            <summary>
+            请求成功
+            </summary>
+            <param name="code"></param>
+            <param name="msg"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.ActionRes.Fail(System.String)">
+            <summary>
+            请求失败
+            </summary>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.ActionRes.Fail(System.Exception,System.Boolean)">
+            <summary>
+            请求失败
+            </summary>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.ActionRes.Fail">
+            <summary>
+            请求失败
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.ActionRes.Fail(System.Object)">
+            <summary>
+            请求失败
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backstage.Api.ActionRes.Fail(System.Int32,System.String,System.Object)">
+            <summary>
+            请求失败
+            </summary>
+            <param name="code"></param>
+            <param name="msg"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Backstage.Api.Utils.CatExceptionFilter">
+            <summary>
+            自定义异常过滤
+            </summary>
+        </member>
+    </members>
+</doc>

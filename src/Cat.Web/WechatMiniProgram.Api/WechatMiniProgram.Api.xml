@@ -1,0 +1,251 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WechatMiniProgram.Api</name>
+    </assembly>
+    <members>
+        <member name="T:WechatMiniProgram.Api.Controllers.BookReadRecordController">
+            <summary>
+            书本阅读记录表
+            </summary>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.BookReadRecordController.CreateOrUpdateAsync(CatBookApp.BookReadRecords.Dto.CreateBookReadRecordDto)">
+            <summary>
+            新增或更新
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.BookReadRecordController.GetPagedByLastReadingAsync(CatBookApp.BookReadRecords.Dto.GetPagedByLastReadingInput)">
+            <summary>
+            分页获取用户最近的阅读记录
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.BookReadRecordController.UpdateDurationAsync(System.Int64,System.Int32)">
+            <summary>
+            更新阅读时长
+            </summary>
+            <param name="id"></param>
+            <param name="seconds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.BookReadRecordController.GetAsync(System.Int64)">
+            <summary>
+            获取数据
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.BookReadRecordController.GetBookReadRecordSummaryAsync(System.String)">
+            <summary>
+            书本阅读记录汇总信息
+            </summary>
+            <param name="openid"></param>
+            <returns>已阅读书本数、章节数、时长(min)</returns>
+        </member>
+        <member name="T:WechatMiniProgram.Api.Controllers.BookSearchController">
+            <summary>
+            书本搜索
+            </summary>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.BookSearchController.GetBookCategoryList">
+            <summary>
+            获取所有搜索来源分类
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.BookSearchController.GetBooks(System.String,System.Int32,System.Int32)">
+            <summary>
+            搜索书本
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.BookSearchController.GetBookChapters(System.Int32,System.String)">
+            <summary>
+            获取小说章节目录信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.BookSearchController.GetBookContent(System.Int32,System.String)">
+            <summary>
+            获取小说的内容
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WechatMiniProgram.Api.Controllers.BookUserController">
+            <summary>
+            book用户
+            </summary>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.BookUserController.CreateOrUpdateAsync(CatBookApp.BookUsers.Dto.CreateBookUserDto)">
+            <summary>
+            新增或更新
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.BookUserController.GetByOpenid(System.String)">
+            <summary>
+            获取数据
+            </summary>
+            <param name="openid"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WechatMiniProgram.Api.Controllers.BookUserPreferenceController">
+            <summary>
+            用户偏好
+            </summary>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.BookUserPreferenceController.CreateOrUpdateAsync(CatBookApp.BookUserPreferences.Dto.CreateOrUpdateDto)">
+            <summary>
+            新增或更新
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.BookUserPreferenceController.GetByOpenidAsync(System.String)">
+            <summary>
+            获取数据
+            </summary>
+            <param name="openid"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WechatMiniProgram.Api.Controllers.HomeController">
+            <summary>
+            首页
+            </summary>
+        </member>
+        <member name="T:WechatMiniProgram.Api.Controllers.WechatController">
+            <summary>
+            微信相关
+            </summary>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.WechatController.Jscode2session(System.String)">
+            <summary>
+            登录凭证校验
+            </summary>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="P:WechatMiniProgram.Api.ActionRes.Code">
+            <summary>
+            返回码, 大于等于0就表示成功, 小于0表示失败
+            </summary>
+        </member>
+        <member name="P:WechatMiniProgram.Api.ActionRes.Msg">
+            <summary>
+            描述信息
+            </summary>
+        </member>
+        <member name="P:WechatMiniProgram.Api.ActionRes.Data">
+            <summary>
+            返回数据
+            </summary>
+        </member>
+        <member name="T:WechatMiniProgram.Api.ActionRes.Status">
+            <summary>
+            操作结果
+            </summary>
+        </member>
+        <member name="M:WechatMiniProgram.Api.ActionRes.Response(WechatMiniProgram.Api.ActionRes.Status,System.String,System.Object)">
+            <summary>
+            响应结果
+            </summary>
+            <param name="status"></param>
+            <param name="msg"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.ActionRes.Success">
+            <summary>
+            请求成功
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.ActionRes.Success(System.Object)">
+            <summary>
+            请求成功
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.ActionRes.Success(System.Int32,System.String,System.Object)">
+            <summary>
+            请求成功
+            </summary>
+            <param name="code"></param>
+            <param name="msg"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.ActionRes.Fail(System.String)">
+            <summary>
+            请求失败
+            </summary>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.ActionRes.Fail(System.Exception,System.Boolean)">
+            <summary>
+            请求失败
+            </summary>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.ActionRes.Fail">
+            <summary>
+            请求失败
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.ActionRes.Fail(System.Object)">
+            <summary>
+            请求失败
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WechatMiniProgram.Api.ActionRes.Fail(System.Int32,System.String,System.Object)">
+            <summary>
+            请求失败
+            </summary>
+            <param name="code"></param>
+            <param name="msg"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WechatMiniProgram.Api.Utils.BookApiAccessFilter">
+            <summary>
+            book api 接口请求拦截. 验证请求的[appid]是否在后台设置的白名单中
+            </summary>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Utils.BookApiAccessFilter.OnActionExecuted(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext)">
+            <summary>
+            Action执行后
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Utils.BookApiAccessFilter.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <summary>
+            Action执行前
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:WechatMiniProgram.Api.Utils.BookApiAccessFilter.IsNumber(System.String)">
+            <summary>
+            检测字符串是否为数字
+            </summary>
+            <param name="input">需要检查的字符串</param>
+            <returns>如果字符串为数字，则为 true；否则为 false。</returns>
+        </member>
+        <member name="T:WechatMiniProgram.Api.Utils.CatExceptionFilter">
+            <summary>
+            自定义异常过滤
+            </summary>
+        </member>
+    </members>
+</doc>

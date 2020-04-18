@@ -1,0 +1,10 @@
+//微信小程序配置
+{
+  //喵喵看书
+  "Book": {
+    //小程序appid
+    "Appid": "wx091d1b55e2fcb4a6",
+    //小程序secret
+    "Secret": ""
+  }
+}
