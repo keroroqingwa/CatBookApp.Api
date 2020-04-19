@@ -235,6 +235,13 @@
             </summary>
             <param name="context"></param>
         </member>
+        <member name="M:WechatMiniProgram.Api.Utils.BookApiAccessFilter.IsSelfAppid(System.String)">
+            <summary>
+            检查请求中的appid是否为程序中配置的appid一致
+            </summary>
+            <param name="appid"></param>
+            <returns></returns>
+        </member>
         <member name="M:WechatMiniProgram.Api.Utils.BookApiAccessFilter.IsNumber(System.String)">
             <summary>
             检测字符串是否为数字

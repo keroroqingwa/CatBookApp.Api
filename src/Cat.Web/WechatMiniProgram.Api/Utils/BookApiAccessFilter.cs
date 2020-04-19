@@ -2,11 +2,12 @@
 using Abp.UI;
 using CatBookApp.BookApiWhiteLists;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace WechatMiniProgram.Api.Utils
 {
@@ -16,6 +17,7 @@ namespace WechatMiniProgram.Api.Utils
     public class BookApiAccessFilter : Attribute, IActionFilter
     {
         private readonly IIocResolver _iocResolver;
+
         public BookApiAccessFilter()
         {
             _iocResolver = IocManager.Instance;
@@ -61,7 +63,7 @@ namespace WechatMiniProgram.Api.Utils
             if (string.IsNullOrEmpty(appid) || string.IsNullOrEmpty(version)) throw new UserFriendlyException("Referer没有匹配到appid值，请在小程序端访问接口");
 
             //如果是“体验版”或“正式版本”
-            if (IsNumber(version))
+            if (IsNumber(version) && !IsSelfAppid(appid))
             {
                 //测试访问来源站点是否在白名单内
                 using (var _bookApiWhiteListAppService = _iocResolver.ResolveAsDisposable<IBookApiWhiteListAppService>())
@@ -70,6 +72,21 @@ namespace WechatMiniProgram.Api.Utils
                     if (entity == null || entity.ExpireTime < DateTime.Now) throw new UserFriendlyException("抱歉，小说接口不能用于小程序线上环境（体验版、正式版），仅供开发版学习测试所用！请自行配置为本地后端api接口，则不受此限制。");
                 }
             }
+        }
+
+        /// <summary>
+        /// 检查请求中的appid是否为程序中配置的appid一致
+        /// </summary>
+        /// <param name="appid"></param>
+        /// <returns></returns>
+        private bool IsSelfAppid(string appid)
+        {
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile($"Configs{Path.DirectorySeparatorChar}wechatsettings.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
+            var _configuration = builder.Build();
+            return _configuration["Book:Appid"] == appid;
+
         }
 
         /// <summary>
