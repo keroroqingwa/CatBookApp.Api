@@ -61,7 +61,7 @@ namespace WechatMiniProgram.Api.Utils
             if (string.IsNullOrEmpty(appid) || string.IsNullOrEmpty(version)) throw new UserFriendlyException("Referer没有匹配到appid值，请在小程序端访问接口");
 
             //如果是“体验版”或“正式版本”
-            //if (IsNumber(version))
+            if (IsNumber(version))
             {
                 //测试访问来源站点是否在白名单内
                 using (var _bookApiWhiteListAppService = _iocResolver.ResolveAsDisposable<IBookApiWhiteListAppService>())
