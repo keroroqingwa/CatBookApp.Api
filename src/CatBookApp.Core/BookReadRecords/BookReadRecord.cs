@@ -10,7 +10,7 @@ namespace CatBookApp.BookReadRecords
     /// <summary>
     /// 书本阅读记录表
     /// </summary>
-    [Table("Book_ReadRecord")]
+    [Table("book_readrecord")]
     public class BookReadRecord : AuditedEntity<long>
     {
         /// <summary>

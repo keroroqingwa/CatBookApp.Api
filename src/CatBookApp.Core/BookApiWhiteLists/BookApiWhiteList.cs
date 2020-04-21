@@ -10,7 +10,7 @@ namespace CatBookApp.BookApiWhiteLists
     /// <summary>
     /// book相关Api接口白名单
     /// </summary>
-    [Table("Book_ApiWhiteList")]
+    [Table("book_apiwhitelist")]
     public class BookApiWhiteList: FullAuditedEntity<long>
     {
         /// <summary>

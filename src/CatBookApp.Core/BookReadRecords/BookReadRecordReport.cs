@@ -11,7 +11,7 @@ namespace CatBookApp.BookReadRecords
     /// <summary>
     /// 书本阅读记录汇总表（不参与具体业务，冗余表）
     /// </summary>
-    [Table("Book_ReadRecordReport")]
+    [Table("book_readrecordreport")]
     public class BookReadRecordReport : Entity<long>, IHasCreationTime, IHasModificationTime
     {
         /// <summary>

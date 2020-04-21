@@ -10,7 +10,7 @@ namespace CatBookApp.BookUserPreferences
     /// <summary>
     /// 用户偏好表
     /// </summary>
-    [Table("Book_UserPreference")]
+    [Table("book_userpreference")]
     public class BookUserPreference: AuditedEntity<long>
     {
         /// <summary>

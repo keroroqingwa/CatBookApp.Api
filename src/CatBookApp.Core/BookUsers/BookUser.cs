@@ -10,7 +10,7 @@ namespace CatBookApp.BookUsers
     /// <summary>
     /// Book用户表
     /// </summary>
-    [Table("Book_User")]
+    [Table("book_user")]
     public class BookUser: AuditedEntity<long>
     {
         /// <summary>
