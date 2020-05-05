@@ -20,8 +20,8 @@ namespace CatBookApp.BookSearches
             var list = new List<GetBookCategoryListOutput>()
                 {
                     new GetBookCategoryListOutput(){ Value = 1,Key = "笔趣阁" },
+                    new GetBookCategoryListOutput(){ Value = 3,Key = "新笔趣阁" },
                     new GetBookCategoryListOutput(){ Value = 2,Key = "外国文学" },
-                    //new GetBookCategoryListOutput(){ Value = 3,Key = "全本小说网" },
                     //new GetBookCategoryListOutput(){ Value = 4,Key = "书旗网" },
                     //new GetBookCategoryListOutput(){ Value = 5,Key = "言情小说吧" },
                     //new GetBookCategoryListOutput(){ Value = 6,Key = "古典文学网" }
