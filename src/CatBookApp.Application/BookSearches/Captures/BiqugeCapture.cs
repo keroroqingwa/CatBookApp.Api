@@ -9,7 +9,7 @@ using System.Threading;
 namespace CatBookApp.BookSearches.Captures
 {
     /// <summary>
-    /// 抓取来源：笔趣阁
+    /// 抓取来源：笔趣阁 https://www.xsbiquge.com
     /// </summary>
     public class BiqugeCapture : IBookCapture
     {
@@ -23,34 +23,23 @@ namespace CatBookApp.BookSearches.Captures
         {
             HtmlDocument doc = new HtmlDocument();
             string url = string.Empty;
-            //这里请求三次是因为。。。 调试过就知道，你就当做是错误重试吧 (′゜ω。‵)
+            //这里请求两次是因为。。。 调试过就知道，你就当做是错误重试吧 (′゜ω。‵)
             try
             {
                 try
                 {
                     //no.1
-                    url = $"https://www.xxbiquge.com/search.php?keyword={q}&page={pn}&p={pn - 1}";
+                    url = $"https://www.xsbiquge.com/search.php?keyword={q}&page={pn}&p={pn - 1}";
                     HtmlWeb webClient = new HtmlWeb();
                     doc = webClient.Load(url);
                 }
                 catch
                 {
-                    try
-                    {
-                        //no.2
-                        url = $"http://zhannei.baidu.com/cse/search?s=8823758711381329060&q={q}&page={pn}&p={pn - 1}";
-                        Thread.Sleep(1000 * 1);
-                        var html = Utils.HttpHelper.Get(url);
-                        doc.LoadHtml(html);
-                    }
-                    catch
-                    {
-                        //no.3
-                        url = $"http://zhannei.baidu.com/cse/search?s=3654077655350271938&q={q}&page={pn}&p={pn - 1}";
-                        Thread.Sleep(1000 * 2);
-                        HtmlWeb webClient = new HtmlWeb();
-                        doc = webClient.Load(url);
-                    }
+                    //no.2
+                    url = $"https://www.xxbiquge.com/search.php?keyword={q}&page={pn}&p={pn - 1}";
+                    Thread.Sleep(1000 * 1);
+                    var html = Utils.HttpHelper.Get(url);
+                    doc.LoadHtml(html);
                 }
             }
             catch (Exception ex)
@@ -136,6 +125,7 @@ namespace CatBookApp.BookSearches.Captures
             var bookChapter = new BookChapterDto()
             {
                 BookName = doc.DocumentNode.SelectSingleNode("//div[@id='info']/h1").InnerText.Trim(),
+                BookLink = bookLink,
                 Author = nodes[0].InnerText.Replace(nodes[0].InnerText.Split('：')[0] + "：", string.Empty).Trim(),
                 Status = nodes[1].InnerText.Replace(nodes[1].InnerText.Split('：')[0] + "：", string.Empty).Replace(",加入书架,直达底部", string.Empty),
                 Last_Update_Time = nodes[2].InnerText.Replace(nodes[2].InnerText.Split('：')[0] + "：", string.Empty),
