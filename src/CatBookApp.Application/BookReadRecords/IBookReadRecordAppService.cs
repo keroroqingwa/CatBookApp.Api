@@ -54,5 +54,13 @@ namespace CatBookApp.BookReadRecords
         /// <param name="input"></param>
         /// <returns></returns>
         Task<PagedResultDto<BookReadRecordOutput>> GetPagedAsync(GetPagedInput input);
+
+        /// <summary>
+        /// 设置在小程序首页中 隐藏/显示 当前阅读记录
+        /// </summary>
+        /// <param name="reportId"></param>
+        /// <param name="isHide"></param>
+        /// <returns></returns>
+        Task SetHideByHomePage(long reportId, bool isHide);
     }
 }

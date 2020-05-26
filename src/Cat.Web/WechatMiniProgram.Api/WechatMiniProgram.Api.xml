@@ -45,6 +45,14 @@
             <param name="openid"></param>
             <returns>已阅读书本数、章节数、时长(min)</returns>
         </member>
+        <member name="M:WechatMiniProgram.Api.Controllers.BookReadRecordController.SetHideByHomePage(System.Int64,System.Boolean)">
+            <summary>
+            设置在小程序首页中 隐藏/显示 当前阅读记录
+            </summary>
+            <param name="reportId"></param>
+            <param name="isHide"></param>
+            <returns></returns>
+        </member>
         <member name="T:WechatMiniProgram.Api.Controllers.BookSearchController">
             <summary>
             书本搜索

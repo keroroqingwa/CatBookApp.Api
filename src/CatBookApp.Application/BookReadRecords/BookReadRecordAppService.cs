@@ -79,7 +79,8 @@ namespace CatBookApp.BookReadRecords
                 Author = model.Author,
                 BookName = model.BookName,
                 LastBookReadRecordId = model.Id,
-                LastModificationTime = DateTime.Now
+                LastModificationTime = DateTime.Now,
+                IsHideByHomePage = false
             };
 
             if (entity == null)
@@ -103,7 +104,8 @@ namespace CatBookApp.BookReadRecords
         {
             //过滤查询
             var query = _repositoryReport.GetAll()
-                .WhereIf(!string.IsNullOrEmpty(input.Openid), t => t.Openid == input.Openid);
+                .WhereIf(!string.IsNullOrEmpty(input.Openid), t => t.Openid == input.Openid)
+                .WhereIf(input.IsHideByHomePage != null, t => t.IsHideByHomePage == input.IsHideByHomePage);
 
             //排序
             query = !string.IsNullOrEmpty(input.Sorting) ? query.OrderBy(input.Sorting) : query.OrderByDescending(t => t.LastModificationTime);
@@ -119,7 +121,13 @@ namespace CatBookApp.BookReadRecords
             var listRecords = _repository.GetAllList(w => lastBookReadRecordIds.Contains(w.Id));
             listRecords = listRecords.OrderBy(a => Array.IndexOf(lastBookReadRecordIds.ToArray(), a.Id)).ToList(); //排序
 
-            return new PagedResultDto<LastReadingOutput>(count, ObjectMapper.Map<List<LastReadingOutput>>(listRecords));
+            var resList = ObjectMapper.Map<List<LastReadingOutput>>(listRecords);
+            foreach(var item in resList)
+            {
+                item.ReportId = list.FirstOrDefault(w => w.LastBookReadRecordId == item.Id).Id;
+            }
+
+            return new PagedResultDto<LastReadingOutput>(count, resList);
         }
 
         /// <summary>
@@ -194,6 +202,21 @@ namespace CatBookApp.BookReadRecords
             var list = query.PageBy(input).ToList();
 
             return new PagedResultDto<BookReadRecordOutput>(count, ObjectMapper.Map<List<BookReadRecordOutput>>(list));
+        }
+
+        /// <summary>
+        /// 设置在小程序首页中 隐藏/显示 当前阅读记录
+        /// </summary>
+        /// <param name="reportId"></param>
+        /// <param name="isHide"></param>
+        /// <returns></returns>
+        public async Task SetHideByHomePage(long reportId, bool isHide)
+        {
+            var entity = await _repositoryReport.FirstOrDefaultAsync(reportId);
+
+            entity.IsHideByHomePage = isHide;
+
+            await _repositoryReport.UpdateAsync(entity);
         }
     }
 }

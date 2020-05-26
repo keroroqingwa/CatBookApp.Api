@@ -14,5 +14,10 @@ namespace CatBookApp.BookReadRecords.Dto
         [Required]
         [MaxLength(100)]
         public string Openid { get; set; }
+
+        /// <summary>
+        /// 在小程序首页中隐藏当前阅读记录
+        /// </summary>
+        public bool? IsHideByHomePage { get; set; }
     }
 }

@@ -39,5 +39,10 @@ namespace CatBookApp.BookReadRecords.Dto
 
         public DateTime CreationTime { get; set; }
         public DateTime? LastModificationTime { get; set; }
+
+        /// <summary>
+        /// 书本阅读记录汇总表id
+        /// </summary>
+        public long ReportId { get; set; }
     }
 }

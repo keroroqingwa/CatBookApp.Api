@@ -40,6 +40,11 @@ namespace CatBookApp.BookReadRecords
         [Required]
         public long LastBookReadRecordId { get; set; }
 
+        /// <summary>
+        /// 在小程序首页中隐藏当前阅读记录
+        /// </summary>
+        public bool? IsHideByHomePage { get; set; }
+
         
         public DateTime CreationTime { get; set; }
         public DateTime? LastModificationTime { get; set; }

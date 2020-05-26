@@ -84,5 +84,19 @@ namespace WechatMiniProgram.Api.Controllers
 
             return ActionRes.Success(res);
         }
+
+        /// <summary>
+        /// 设置在小程序首页中 隐藏/显示 当前阅读记录
+        /// </summary>
+        /// <param name="reportId"></param>
+        /// <param name="isHide"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionRes> SetHideByHomePage(long reportId, bool isHide)
+        {
+            await _bookReadRecordAppService.SetHideByHomePage(reportId, isHide);
+
+            return ActionRes.Success();
+        }
     }
 }

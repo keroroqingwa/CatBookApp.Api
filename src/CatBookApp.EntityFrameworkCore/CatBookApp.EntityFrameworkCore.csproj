@@ -15,6 +15,10 @@
     <RootNamespace>CatBookApp</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Migrations\20200506075256_UpdateBookReadRecordReport2.cs" />
+    <Compile Remove="Migrations\20200506075256_UpdateBookReadRecordReport2.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\CatBookApp.Core\CatBookApp.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
