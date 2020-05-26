@@ -130,11 +130,12 @@
             微信相关
             </summary>
         </member>
-        <member name="M:WechatMiniProgram.Api.Controllers.WechatController.Jscode2session(System.String)">
+        <member name="M:WechatMiniProgram.Api.Controllers.WechatController.Jscode2session(System.String,System.String)">
             <summary>
             登录凭证校验
             </summary>
             <param name="code"></param>
+            <param name="appid"></param>
             <returns></returns>
         </member>
         <member name="P:WechatMiniProgram.Api.ActionRes.Code">

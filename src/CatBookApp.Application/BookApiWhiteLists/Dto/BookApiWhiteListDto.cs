@@ -30,5 +30,10 @@ namespace CatBookApp.BookApiWhiteLists.Dto
         /// 备注
         /// </summary>
         public string Remark { get; set; }
+
+        /// <summary>
+        /// 秘钥
+        /// </summary>
+        public string AppSecret { get; set; }
     }
 }

@@ -24,11 +24,12 @@ namespace WechatMiniProgram.Api.Controllers
         /// 登录凭证校验
         /// </summary>
         /// <param name="code"></param>
+        /// <param name="appid"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionRes Jscode2session(string code)
+        public ActionRes Jscode2session(string code, string appid = "")
         {
-            var res = _wechatAppService.Jscode2session(code);
+            var res = _wechatAppService.Jscode2session(code, appid);
 
             if (res.Errcode == 0)
                 return ActionRes.Success(res);

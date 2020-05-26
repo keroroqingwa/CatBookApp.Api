@@ -44,6 +44,6 @@ namespace CatBookApp.BookApiWhiteLists
         /// </summary>
         /// <param name="appid"></param>
         /// <returns></returns>
-        Task<BookApiWhiteListOutput> GetByAppidAsync(string appid);
+        Task<BookApiWhiteListDto> GetByAppidAsync(string appid);
     }
 }

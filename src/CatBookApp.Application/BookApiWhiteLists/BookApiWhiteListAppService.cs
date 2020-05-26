@@ -103,11 +103,11 @@ namespace CatBookApp.BookApiWhiteLists
         /// </summary>
         /// <param name="appid"></param>
         /// <returns></returns>
-        public async Task<BookApiWhiteListOutput> GetByAppidAsync(string appid)
+        public async Task<BookApiWhiteListDto> GetByAppidAsync(string appid)
         {
             var entity = await _repository.FirstOrDefaultAsync(w => w.Appid == appid);
 
-            return ObjectMapper.Map<BookApiWhiteListOutput>(entity);
+            return ObjectMapper.Map<BookApiWhiteListDto>(entity);
         }
     }
 }

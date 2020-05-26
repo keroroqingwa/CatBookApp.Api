@@ -30,5 +30,11 @@ namespace CatBookApp.BookApiWhiteLists
         /// 备注
         /// </summary>
         public string Remark { get; set; }
+
+        /// <summary>
+        /// 秘钥
+        /// </summary>
+        [MaxLength(100)]
+        public string AppSecret { get; set; }
     }
 }
