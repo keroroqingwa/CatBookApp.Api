@@ -94,7 +94,9 @@ namespace WechatMiniProgram.Api.Utils
             {
                 sb.Append(context.Exception.Message);
             }
-            errInfo.Code = -1;
+
+            if (context.Exception is UserFriendlyException == false)
+                errInfo.Code = -1;
 
             ContentResult content = new ContentResult();
             content.Content = JsonConvert.SerializeObject(ActionRes.Fail(-1, sb.ToString(), errInfo), new JsonSerializerSettings
