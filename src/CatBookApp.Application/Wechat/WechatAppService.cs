@@ -44,12 +44,12 @@ namespace CatBookApp.Wechat
 
             if (string.IsNullOrEmpty(_appid) || string.IsNullOrEmpty(_secret)) throw new EntityNotFoundException("[wechatsettings.json]没有正确配置appid/secret");
 
-            if (_appid != appid)
+            if (!string.IsNullOrEmpty(appid) && _appid != appid)
             {
                 //传入的appid跟配置文件的不一致：表示客户端appid是第三方访问时带入的
                 //查看白名单中有无配置此appid
                 var entity = _bookApiWhiteListAppService.GetByAppidAsync(appid).Result;
-                if (entity == null || entity.ExpireTime < DateTime.Now) throw new UserFriendlyException("抱歉，小说接口不能用于小程序线上环境（体验版、正式版），仅供开发版学习测试所用！请自行配置为本地后端api接口，则不受此限制。");
+                if (entity == null || entity.ExpireTime < DateTime.Now) throw new UserFriendlyException("当前appid未被管理员列入白名单，不能进行授权登录！请自行配置为本地后端api接口，则不受此限制。");
                 if (string.IsNullOrEmpty(entity.AppSecret)) throw new UserFriendlyException("小程序AppSecret未配置");
                 _appid = appid;
                 _secret = entity.AppSecret;
