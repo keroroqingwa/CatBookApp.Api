@@ -15,6 +15,8 @@ namespace WechatMiniProgram.Api.Controllers
     {
         private readonly IBookUserAppService _bookUserAppService;
 
+        private static object lockobj = new object();
+
         public BookUserController(IBookUserAppService bookUserAppService)
         {
             _bookUserAppService = bookUserAppService;
@@ -29,15 +31,19 @@ namespace WechatMiniProgram.Api.Controllers
         [HttpPost]
         public async Task<ActionRes> CreateOrUpdateAsync([FromBody]CreateBookUserDto dto)
         {
-            var bookUserOutput = await _bookUserAppService.GetByOpenidAsync(dto.Openid);
+            //临时方案，只适合单机部署的站点使用。如果是分布式，请用redis分布式并发锁等技术
+            lock (lockobj)
+            {
+                var bookUserOutput = _bookUserAppService.GetByOpenidAsync(dto.Openid).Result;
 
-            if (bookUserOutput == null)
-            {
-                await _bookUserAppService.CreateAsync(dto);
-            }
-            else
-            {
-                await _bookUserAppService.UpdateAsync(ObjectMapper.Map<UpdateBookUserDto>(bookUserOutput));
+                if (bookUserOutput == null)
+                {
+                    _bookUserAppService.CreateAsync(dto).Wait();
+                }
+                else
+                {
+                    _bookUserAppService.UpdateAsync(ObjectMapper.Map<UpdateBookUserDto>(bookUserOutput)).Wait();
+                }
             }
 
             return ActionRes.Success();
