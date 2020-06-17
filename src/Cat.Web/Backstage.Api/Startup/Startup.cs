@@ -93,7 +93,7 @@ namespace Backstage.Api
                     Title = "「喵喵看书」小程序中后台后端api",
                     Version = "v3",
                     Description = "这是「喵喵看书」微信小程序的中后台接口程序，如有任何疑问可加QQ群：875607244",
-                    Contact = new OpenApiContact() { Name = "查看 青蛙的 GitHub", Email = "514158268@qq.com", Url = new Uri("https://github.com/keroroqingwa/book.admin.somethingwhat.com") }
+                    Contact = new OpenApiContact() { Name = "查看 青蛙的 GitHub", Email = "514158268@qq.com", Url = new Uri("https://github.com/keroroqingwa/CatBookApp.Api") }
                 });
 
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());

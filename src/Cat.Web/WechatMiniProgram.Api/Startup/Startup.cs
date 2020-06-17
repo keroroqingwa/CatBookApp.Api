@@ -91,7 +91,7 @@ namespace WechatMiniProgram.Api
                     Title = "「喵喵看书」小程序后端api",
                     Version = "v3",
                     Description = "这是「喵喵看书」微信小程序的后端接口程序，如有任何疑问可加QQ群：875607244",
-                    Contact = new OpenApiContact() { Name = "查看 青蛙的 GitHub", Email = "514158268@qq.com", Url = new Uri("https://github.com/keroroqingwa/book.admin.somethingwhat.com") }
+                    Contact = new OpenApiContact() { Name = "查看 青蛙的 GitHub", Email = "514158268@qq.com", Url = new Uri("https://github.com/keroroqingwa/CatBookApp.MiniProgram") }
                 });
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
                 var xmlPath = Path.Combine(_env.ContentRootPath, "WechatMiniProgram.Api.xml");
