@@ -3,6 +3,7 @@ using CatBookApp.BookSearches.Dto;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Threading;
 
@@ -31,6 +32,10 @@ namespace CatBookApp.BookSearches.Captures
                     //no.1
                     url = $"https://www.xsbiquge.com/search.php?keyword={q}&page={pn}&p={pn - 1}";
                     HtmlWeb webClient = new HtmlWeb();
+
+                    //webClient.OverrideEncoding = Encoding.UTF8;
+                    SetGZipHeader(webClient);
+
                     doc = webClient.Load(url);
                 }
                 catch
@@ -87,14 +92,20 @@ namespace CatBookApp.BookSearches.Captures
                 try
                 {
                     webClient = new HtmlWeb();
-                    webClient.OverrideEncoding = Encoding.UTF8;
+
+                    //webClient.OverrideEncoding = Encoding.UTF8;
+                    SetGZipHeader(webClient);
+
                     doc = webClient.Load(bookLink);
                 }
                 catch
                 {
                     Thread.Sleep(2000);
                     webClient = new HtmlWeb();
-                    webClient.OverrideEncoding = Encoding.UTF8;
+
+                    //webClient.OverrideEncoding = Encoding.UTF8;
+                    SetGZipHeader(webClient);
+
                     doc = webClient.Load(bookLink);
                 }
             }
@@ -147,7 +158,9 @@ namespace CatBookApp.BookSearches.Captures
         {
             HtmlWeb webClient = new HtmlWeb();
             HtmlDocument doc;
-            webClient.OverrideEncoding = Encoding.UTF8;
+
+            //webClient.OverrideEncoding = Encoding.UTF8;
+            SetGZipHeader(webClient);
 
             //这里两次请求是为了。。。 不解释了
             try
@@ -208,6 +221,23 @@ namespace CatBookApp.BookSearches.Captures
             str = str.Replace("&nbsp;", " ").Replace("<br>", "\n").Replace("<br/>", "\n").Replace("<br />", "\n").Replace("readx();", "").Replace("&amp;nbsp;", " ");
             str = CaptureHelper.ClearSensitiveCharacter(str);
             return str;
+        }
+
+        /// <summary>
+        /// HtmlWeb.Load() 不支持 gzip 的解决方法
+        /// </summary>
+        /// <param name="webClient"></param>
+        private static void SetGZipHeader(HtmlWeb webClient)
+        {
+            HtmlWeb.PreRequestHandler handler = delegate (HttpWebRequest request)
+            {
+                request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate";
+                request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+                request.CookieContainer = new System.Net.CookieContainer();
+                return true;
+            };
+            webClient.PreRequest += handler;
+            webClient.OverrideEncoding = Encoding.Default;
         }
     }
 }
