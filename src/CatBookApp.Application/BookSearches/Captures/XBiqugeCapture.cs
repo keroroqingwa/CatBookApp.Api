@@ -39,10 +39,11 @@ namespace CatBookApp.BookSearches.Captures
             try
             {
                 //no.1
-                url = $"http://www.biquwo.org/searchbook.php?keyword={q}&page={pn}";
+                //url = $"http://www.biquwo.org/searchbook.php?keyword={q}&page={pn}";
+                url = $"https://bqg123.net/search?form=biqusoso&keyword={q}";
                 HtmlWeb webClient = new HtmlWeb();
 
-                //webClient.OverrideEncoding = Encoding.UTF8;
+                webClient.OverrideEncoding = Encoding.UTF8;
                 SetGZipHeader(webClient);
 
                 doc = webClient.Load(url);

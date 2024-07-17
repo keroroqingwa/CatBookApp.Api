@@ -4,13 +4,14 @@ using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Security.Policy;
 using System.Text;
 using System.Threading;
 
 namespace CatBookApp.BookSearches.Captures
 {
     /// <summary>
-    /// 抓取来源：笔趣阁 https://www.xsbiquge.com
+    /// 抓取来源：笔趣阁 http://www.biquhui.com
     /// </summary>
     public class BiqugeCapture : IBookCapture
     {
@@ -30,20 +31,25 @@ namespace CatBookApp.BookSearches.Captures
                 try
                 {
                     //no.1
-                    url = $"https://www.xsbiquge.com/search.php?keyword={q}&page={pn}&p={pn - 1}";
-                    HtmlWeb webClient = new HtmlWeb();
+                    url = $"http://www.biquhui.com/modules/article/search.php?searchkey={q}";
+                    //HtmlWeb webClient = new HtmlWeb();
 
                     //webClient.OverrideEncoding = Encoding.UTF8;
-                    SetGZipHeader(webClient);
+                    ////SetGZipHeader(webClient);
 
-                    doc = webClient.Load(url);
+                    //doc = webClient.Load(url);
+
+                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                    var html = Utils.HttpHelper.Get(url, Encoding.GetEncoding("gbk"));
+                    doc.LoadHtml(html);
+
                 }
                 catch
                 {
                     //no.2
-                    url = $"https://www.xxbiquge.com/search.php?keyword={q}&page={pn}&p={pn - 1}";
-                    Thread.Sleep(1000 * 1);
-                    var html = Utils.HttpHelper.Get(url);
+                    Thread.Sleep(2000);
+                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                    var html = Utils.HttpHelper.Get(url, Encoding.GetEncoding("gbk"));
                     doc.LoadHtml(html);
                 }
             }
@@ -53,23 +59,24 @@ namespace CatBookApp.BookSearches.Captures
             }
 
             List<BookInfoDto> list = new List<BookInfoDto>();
-            var books = doc.DocumentNode.SelectNodes("//div[@class='result-list']/div");
+            var books = doc.DocumentNode.SelectNodes("//div[@id='hotcontent']/table/tr");
             if (books != null)
             {
                 int i = 0;
                 foreach (var item in books)
                 {
+                    if (item.SelectNodes("td") == null) continue;
                     list.Add(new BookInfoDto()
                     {
-                        BookName = item.SelectNodes("//a[@class='result-game-item-title-link']")[i].Attributes["title"].Value,
-                        BookLink = item.SelectNodes("//a[@class='result-game-item-title-link']")[i].Attributes["href"].Value.Trim(),
-                        Author = item.SelectNodes("//p[@class='result-game-item-info-tag']")[i * 4 + 0].SelectNodes("span")[1].InnerText.Replace("\r\n", string.Empty).Trim(),
-                        CoverImage = item.SelectNodes("//img[@class='result-game-item-pic-link-img']")[i].Attributes["src"].Value,
-                        BookClassify = item.SelectNodes("//p[@class='result-game-item-info-tag']")[i * 4 + 1].SelectNodes("span")[1].InnerText.Replace("\r\n", string.Empty).Trim(),
-                        Last_Update_Time = item.SelectNodes("//p[@class='result-game-item-info-tag']")[i * 4 + 2].SelectNodes("span")[1].InnerText.Replace("\r\n", string.Empty).Trim(),
-                        BookIntro = item.SelectNodes("//p[@class='result-game-item-desc']")[i].InnerText,
-                        Last_Update_ChapterName = item.SelectNodes("//p[@class='result-game-item-info-tag']")[i * 4 + 3].SelectSingleNode("a").InnerText.Trim(),
-                        Last_Update_ChapterLink = item.SelectNodes("//p[@class='result-game-item-info-tag']")[i * 4 + 3].SelectSingleNode("a").Attributes["href"].Value.Trim()
+                        BookName = item.SelectNodes("td")[0].InnerText.Trim(),
+                        BookLink = $"http://www.biquhui.com{item.SelectNodes("td")[0].SelectSingleNode("a").Attributes["href"].Value}",
+                        Author = item.SelectNodes("td")[2].InnerText.Trim(),
+                        CoverImage = "",
+                        BookClassify = "",
+                        Last_Update_Time = item.SelectNodes("td")[4].InnerText.Trim(),
+                        BookIntro = "",
+                        Last_Update_ChapterName = item.SelectNodes("td")[1].InnerText.Trim(),
+                        Last_Update_ChapterLink = $"http://www.biquhui.com{item.SelectNodes("td")[1].SelectSingleNode("a").Attributes["href"].Value}"
                     });
                     i++;
                 }
@@ -85,28 +92,29 @@ namespace CatBookApp.BookSearches.Captures
         public BookChapterDto GetBookChapters(string bookLink)
         {
             HtmlWeb webClient;
-            HtmlDocument doc;
+            HtmlDocument doc = new HtmlDocument();
             //这里两次请求是为了。。。  嗯，错误请求重试
             try
             {
                 try
                 {
-                    webClient = new HtmlWeb();
+                    //webClient = new HtmlWeb();
 
-                    //webClient.OverrideEncoding = Encoding.UTF8;
-                    SetGZipHeader(webClient);
+                    ////webClient.OverrideEncoding = Encoding.UTF8;
+                    //SetGZipHeader(webClient);
 
-                    doc = webClient.Load(bookLink);
+                    //doc = webClient.Load(bookLink);
+
+                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                    var html = Utils.HttpHelper.Get(bookLink, Encoding.GetEncoding("gbk"));
+                    doc.LoadHtml(html);
                 }
                 catch
                 {
                     Thread.Sleep(2000);
-                    webClient = new HtmlWeb();
-
-                    //webClient.OverrideEncoding = Encoding.UTF8;
-                    SetGZipHeader(webClient);
-
-                    doc = webClient.Load(bookLink);
+                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                    var html = Utils.HttpHelper.Get(bookLink, Encoding.GetEncoding("gbk"));
+                    doc.LoadHtml(html);
                 }
             }
             catch (Exception ex)
@@ -140,8 +148,8 @@ namespace CatBookApp.BookSearches.Captures
                 Author = nodes[0].InnerText.Replace(nodes[0].InnerText.Split('：')[0] + "：", string.Empty).Trim(),
                 Status = nodes[1].InnerText.Replace(nodes[1].InnerText.Split('：')[0] + "：", string.Empty).Replace(",加入书架,直达底部", string.Empty),
                 Last_Update_Time = nodes[2].InnerText.Replace(nodes[2].InnerText.Split('：')[0] + "：", string.Empty),
-                Last_Update_ChapterName = nodes[3].InnerText.Replace(nodes[3].InnerText.Split('：')[0] + "：", string.Empty).Trim(),
-                Last_Update_ChapterLink = _domain + nodes[3].ChildNodes["a"].Attributes["href"].Value.Trim(),
+                Last_Update_ChapterName = "", //nodes[3].InnerText.Replace(nodes[3].InnerText.Split('：')[0] + "：", string.Empty).Trim(),
+                Last_Update_ChapterLink = "", //_domain + nodes[3].ChildNodes["a"].Attributes["href"].Value.Trim(),
                 Intro = doc.DocumentNode.SelectSingleNode("//div[@id='intro']").InnerText.Replace("&nbsp;", "").Trim(),
                 Chapterlist = chapterList
             };
@@ -157,7 +165,7 @@ namespace CatBookApp.BookSearches.Captures
         public BookContentDto GetBookContent(string chapterLink)
         {
             HtmlWeb webClient = new HtmlWeb();
-            HtmlDocument doc;
+            HtmlDocument doc = new HtmlDocument();
 
             //webClient.OverrideEncoding = Encoding.UTF8;
             SetGZipHeader(webClient);
@@ -167,12 +175,19 @@ namespace CatBookApp.BookSearches.Captures
             {
                 try
                 {
-                    doc = webClient.Load(chapterLink);
+                    //doc = webClient.Load(chapterLink);
+
+                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                    var html = Utils.HttpHelper.Get(chapterLink, Encoding.GetEncoding("gbk"));
+                    doc.LoadHtml(html);
                 }
                 catch
                 {
                     Thread.Sleep(2000);
-                    doc = webClient.Load(chapterLink);
+
+                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                    var html = Utils.HttpHelper.Get(chapterLink, Encoding.GetEncoding("gbk"));
+                    doc.LoadHtml(html);
                 }
             }
             catch (Exception ex)
@@ -191,13 +206,13 @@ namespace CatBookApp.BookSearches.Captures
             //
             var bookContent = new BookContentDto()
             {
-                BookName = doc.DocumentNode.SelectSingleNode("//div[@class='footer_cont']/p/a").InnerText.Trim(),
-                BookLink = _domain + nodes[1].Attributes["href"].Value.Trim(),
+                BookName = doc.DocumentNode.SelectNodes("//div[@class='con_top']/a")[2].InnerText.Trim(),
+                BookLink = _domain + doc.DocumentNode.SelectNodes("//div[@class='con_top']/a")[2].Attributes["href"].Value.Trim(),
                 ChapterName = doc.DocumentNode.SelectSingleNode("//div[@class='bookname']/h1").InnerText.Trim(),
                 ChapterLink = chapterLink,
-                Content = ClearSensitiveCharacter(_content).TrimEnd(),
-                NextChapterLink = _domain + nodes[2].Attributes["href"].Value.Trim(),
-                PrevChapterLink = _domain + nodes[0].Attributes["href"].Value.Trim()
+                Content = ClearSensitiveCharacter(_content).Trim(),
+                NextChapterLink = _domain + doc.DocumentNode.SelectNodes("//div[@class='bottem1']/a")[3].Attributes["href"].Value.Trim(),
+                PrevChapterLink = _domain + doc.DocumentNode.SelectNodes("//div[@class='bottem1']/a")[1].Attributes["href"].Value.Trim()
             };
             bookContent.Number_Of_Words = ClearSensitiveCharacter(doc.DocumentNode.SelectSingleNode("//div[@id='content']").InnerText).TrimEnd().Length;
 
@@ -219,6 +234,7 @@ namespace CatBookApp.BookSearches.Captures
         {
             str = str.Replace("  ", "　").Replace("&nbsp;&nbsp;", "　");//连续连个英文空格就替换成一个中文空格
             str = str.Replace("&nbsp;", " ").Replace("<br>", "\n").Replace("<br/>", "\n").Replace("<br />", "\n").Replace("readx();", "").Replace("&amp;nbsp;", " ");
+            str = str.Replace("</p>", "\n\n");
             str = CaptureHelper.ClearSensitiveCharacter(str);
             return str;
         }
@@ -237,7 +253,7 @@ namespace CatBookApp.BookSearches.Captures
                 return true;
             };
             webClient.PreRequest += handler;
-            webClient.OverrideEncoding = Encoding.Default;
+            webClient.OverrideEncoding = Encoding.UTF8;
         }
     }
 }

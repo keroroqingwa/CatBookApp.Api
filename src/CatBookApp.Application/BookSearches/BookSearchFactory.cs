@@ -18,14 +18,14 @@ namespace CatBookApp.BookSearches
                 case 1:
                     bookCapture = new BiqugeCapture();
                     break;
-                case 2:
-                    bookCapture = new LiteratureForeignCapture();
-                    break;
-                case 3:
-                    bookCapture = new XBiqugeCapture();
-                    break;
+                //case 2:
+                //    bookCapture = new LiteratureForeignCapture();
+                //    break;
+                //case 3:
+                //    bookCapture = new XBiqugeCapture();
+                //    break;
                 default:
-                    throw new UserFriendlyException("指定的[rule]没有对应的实现！");
+                    throw new UserFriendlyException("来源已下架，请切换！");
             }
 
             return bookCapture;
